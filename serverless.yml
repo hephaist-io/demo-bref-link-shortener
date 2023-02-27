@@ -1,0 +1,22 @@
+service: demo-link-shortener
+
+provider:
+    name: aws
+    region: eu-west-3
+    runtime: provided.al2
+    deploymentMethod: direct # fastest deployment method
+
+plugins:
+    - ./vendor/bref/bref
+
+functions:
+    redirect:
+        handler: index.php
+        description: 'Redirect user to target URL'
+        layers:
+            - ${bref:layer.php-81}
+
+# Exclude files from deployment
+package:
+    patterns:
+        - '!tests/**'
