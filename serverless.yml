@@ -15,6 +15,10 @@ functions:
         description: 'Redirect user to target URL'
         layers:
             - ${bref:layer.php-81}
+        events:
+            - httpApi:
+                  method: 'GET'
+                  path: '/{id+}'
 
 # Exclude files from deployment
 package:
