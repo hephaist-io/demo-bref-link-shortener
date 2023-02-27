@@ -4,6 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "bref/bref": "^1.7"
+        "bref/bref": "^1.7",
+        "azjezz/psl": "^2.4"
     }
 }

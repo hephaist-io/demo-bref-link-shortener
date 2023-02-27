@@ -8,13 +8,31 @@ use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use function Psl\Json\typed;
+use function Psl\Type\non_empty_dict;
+use function Psl\Type\non_empty_string;
 
 return new class implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $name = $request->getQueryParams()['name'] ?? 'world';
+        $path = $request->getUri()->getPath();
 
-        return new Response(200, [], sprintf('Hello %s', $name));
+        $fileContent = file_get_contents('./links.json');
+        if (false === $fileContent) {
+            throw new RuntimeException('The file "links.json" is missing.');
+        }
+
+        $registeredLinks = typed(
+            $fileContent,
+            non_empty_dict(
+                non_empty_string(),
+                non_empty_string()
+            )
+        );
+
+        $targetLocation = $registeredLinks[$path];
+
+        return new Response(302, ['Location' => $targetLocation]);
     }
 };
