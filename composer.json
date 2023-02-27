@@ -1,0 +1,9 @@
+{
+    "name": "hephaist-io/demo-bref-link-shortener",
+    "description": "Demo of Bref with a simple link shortener application",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "bref/bref": "^1.7"
+    }
+}
