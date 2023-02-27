@@ -31,7 +31,7 @@ return new class implements RequestHandlerInterface
             )
         );
 
-        $targetLocation = $registeredLinks[$path];
+        $targetLocation = $registeredLinks[$path] ?? 'https://hephaist.io/404';
 
         return new Response(302, ['Location' => $targetLocation]);
     }

@@ -1,0 +1,13 @@
+{
+  "version": "2.0",
+  "rawPath": "/foobar",
+  "cookies": [],
+  "requestContext": {
+    "http": {
+      "method": "GET",
+      "path": "/foobar",
+      "protocol": "HTTP/1.1"
+    }
+  },
+  "isBase64Encoded": false
+}
