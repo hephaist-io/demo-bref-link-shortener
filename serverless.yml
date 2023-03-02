@@ -7,7 +7,8 @@ provider:
     deploymentMethod: direct # fastest deployment method
 
 plugins:
-    - ./vendor/bref/bref
+  - serverless-lift
+  - ./vendor/bref/bref
 
 functions:
     redirect:
@@ -19,6 +20,10 @@ functions:
             - httpApi:
                   method: 'GET'
                   path: '/{id+}'
+
+constructs:
+  published-links:
+    type: storage
 
 # Exclude files from deployment
 package:
