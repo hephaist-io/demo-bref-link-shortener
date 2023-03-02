@@ -14,6 +14,8 @@ functions:
     entrypoint:
         handler: entrypoint.php
         description: 'API to register one or more links'
+        environment:
+          TABLE_NAME: ${construct:links.tableName}
         layers:
             - ${bref:layer.php-81}
         events:
@@ -36,6 +38,8 @@ functions:
 constructs:
   published-links:
     type: storage
+  links:
+    type: database/dynamodb-single-table
 
 # Exclude files from deployment
 package:
