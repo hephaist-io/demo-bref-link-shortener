@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "bref/bref": "^1.7",
-        "azjezz/psl": "^2.4"
+        "azjezz/psl": "^2.4",
+        "aws/aws-sdk-php": "^3.261"
     }
 }

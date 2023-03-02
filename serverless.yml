@@ -16,6 +16,8 @@ functions:
         description: 'Redirect user to target URL'
         layers:
             - ${bref:layer.php-81}
+        environment:
+          BUCKET_NAME: ${construct:published-links.bucketName}
         events:
             - httpApi:
                   method: 'GET'
