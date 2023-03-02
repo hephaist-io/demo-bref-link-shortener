@@ -11,6 +11,16 @@ plugins:
   - ./vendor/bref/bref
 
 functions:
+    entrypoint:
+        handler: entrypoint.php
+        description: 'API to register one or more links'
+        layers:
+            - ${bref:layer.php-81}
+        events:
+            - httpApi:
+                method: 'POST'
+                path: '/links'
+
     redirect:
         handler: index.php
         description: 'Redirect user to target URL'
