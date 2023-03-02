@@ -6,6 +6,8 @@
     "require": {
         "bref/bref": "^1.7",
         "azjezz/psl": "^2.4",
-        "aws/aws-sdk-php": "^3.261"
+        "aws/aws-sdk-php": "^3.261",
+        "symfony/uid": "^6.2",
+        "hidehalo/nanoid-php": "^1.1"
     }
 }

@@ -16,6 +16,7 @@ functions:
         description: 'API to register one or more links'
         environment:
           TABLE_NAME: ${construct:links.tableName}
+          DOMAIN_NAME: 'https://link.test'
         layers:
             - ${bref:layer.php-81}
         events:
