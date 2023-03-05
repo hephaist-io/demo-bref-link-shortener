@@ -61,6 +61,7 @@ return new class($_ENV['TABLE_NAME'], $_ENV['DOMAIN_NAME']) implements RequestHa
         $dbClient = new DynamoDbClient(['region' => 'eu-west-3', 'version' => '2012-08-10']);
         $shortIdGenerator = new Client(size: 8);
 
+        $generatedLinks = [];
         $putItemRequests = [];
         foreach ($links as $target) {
             // Générer le lien raccourci
@@ -84,6 +85,8 @@ return new class($_ENV['TABLE_NAME'], $_ENV['DOMAIN_NAME']) implements RequestHa
                     ]
                 ]
             ];
+
+            $generatedLinks[$target] = $source;
         }
 
         // Écrire les enregistrements dans DynamoDB
@@ -96,7 +99,7 @@ return new class($_ENV['TABLE_NAME'], $_ENV['DOMAIN_NAME']) implements RequestHa
         return new Response(
             status: 200,
             headers: ['Content-Type' => 'application/json'],
-            body: encode(value: [], flags: JSON_FORCE_OBJECT)
+            body: encode(value: $generatedLinks, flags: JSON_FORCE_OBJECT)
         );
     }
 };
