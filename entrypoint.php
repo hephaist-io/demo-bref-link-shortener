@@ -5,6 +5,7 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\EventBridge\EventBridgeClient;
 use Hidehalo\Nanoid\Client;
 use Nyholm\Psr7\Response;
 use Psl\Json\Exception\DecodeException;
@@ -63,6 +64,7 @@ return new class($_ENV['TABLE_NAME'], $_ENV['DOMAIN_NAME']) implements RequestHa
 
         $generatedLinks = [];
         $putItemRequests = [];
+        $events = [];
         foreach ($links as $target) {
             // Générer le lien raccourci
             $source = sprintf('%s/%s', $this->domainName, $shortIdGenerator->generateId());
@@ -86,6 +88,14 @@ return new class($_ENV['TABLE_NAME'], $_ENV['DOMAIN_NAME']) implements RequestHa
                 ]
             ];
 
+            $events[] = [
+                'Source' => 'demo-link-shortener.entrypoint',
+                'DetailType' => 'LinkWasRegistered',
+                'Detail' => encode([
+                    'source' => $source,
+                    'target' => $target
+                ])
+            ];
             $generatedLinks[$target] = $source;
         }
 
@@ -95,6 +105,9 @@ return new class($_ENV['TABLE_NAME'], $_ENV['DOMAIN_NAME']) implements RequestHa
                 $this->linksTableName => $putItemRequests
             ]
         ]);
+
+        $eventBridgeClient = new EventBridgeClient(['region' => 'eu-west-3', 'version' => '2015-10-07']);
+        $eventBridgeClient->putEvents(['Entries' => $events]);
 
         return new Response(
             status: 200,
