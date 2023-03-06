@@ -5,6 +5,12 @@ provider:
     region: eu-west-3
     runtime: provided.al2
     deploymentMethod: direct # fastest deployment method
+    iam:
+      role:
+        statements:
+          - Effect: Allow
+            Action: events:PutEvents
+            Resource: '*'
 
 plugins:
   - serverless-lift
