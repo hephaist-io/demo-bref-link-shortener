@@ -30,6 +30,19 @@ functions:
                 method: 'POST'
                 path: '/links'
 
+    update-short-links:
+        handler: update-short-links.php
+        description: 'Update the list of redirected short links'
+        layers:
+            - ${bref:layer.php-81}
+        environment:
+            BUCKET_NAME: ${construct:published-links.bucketName}
+        reservedConcurrency: 1
+        events:
+            - eventBridge:
+                  pattern:
+                      detail-type: ['LinkWasRegistered']
+
     redirect:
         handler: index.php
         description: 'Redirect user to target URL'
